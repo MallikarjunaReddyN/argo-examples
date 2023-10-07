@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-webapp
+spec:
+  destination:
+    name: ''
+    namespace: dev
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: ''
+    targetRevision: HEAD
+  sources:
+    - repoURL: 'https://github.com/MallikarjunaReddyN/argo-examples'
+      chart: helm-webapp
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - $values/demo-webapp/values-dev.yaml
+    - repoURL: 'https://github.com/MallikarjunaReddyN/argo-examples.git'
+      targetRevision: HEAD
+      ref: values
+  project: default
